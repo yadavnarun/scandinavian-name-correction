@@ -118,14 +118,111 @@ Example using curl:
 curl -X POST http://127.0.0.1:8000/api/correct/ \
      -H "Content-Type: application/json" \
      -d '{
-           "first_name": "",
-           "last_name": "",
+           "first_name": "Ake",
+           "last_name": "Svensson",
            "country_code": "SE"
          }'
 ```
 
-Parameters:
+Response:
 
-- `first_name`: The first name to correct
-- `last_name`: The last name to correct
-- `country_code`: ISO 3166-1 alpha-2 country code (e.g., "SE" for Sweden, "NO" for Norway, "DK" for Denmark)
+```json
+{
+  "first_name_matches": [
+    {
+      "name": "Akke",
+      "score": 86,
+      "base_similarity": 86,
+      "metaphone": ["AK", "AK"],
+      "is_nordic": false,
+      "is_query_variant": false,
+      "in_dataset": true,
+      "type": "first_name",
+      "data": {
+        "country": {
+          "BE": 0.019,
+          "DE": 0.008,
+          "FI": 0.075,
+          "GB": 0.008,
+          "IN": 0.011,
+          "MA": 0.011,
+          "MY": 0.011,
+          "NL": 0.823,
+          "SA": 0.011,
+          "SE": 0.023
+        },
+        "gender": {
+          "F": 0.831,
+          "M": 0.169
+        },
+        "rank": {
+          "FI": 1478,
+          "NL": 1898,
+          "SE": 2973
+        }
+      },
+      "score_reasons": ["Similarity Only"]
+    }
+    // ...other first name matches...
+  ],
+  "last_name_matches": [
+    {
+      "name": "Svensson",
+      "score": 100,
+      "base_similarity": 100,
+      "metaphone": ["SFNSN", "SFNSN"],
+      "is_nordic": true,
+      "is_query_variant": false,
+      "in_dataset": true,
+      "type": "last_name",
+      "data": {
+        "country": {
+          "DE": 0.01,
+          "DK": 0.033,
+          "ES": 0.004,
+          "FI": 0.006,
+          "FR": 0.005,
+          "GB": 0.01,
+          "IT": 0.005,
+          "NO": 0.014,
+          "SE": 0.898,
+          "US": 0.015
+        },
+        "rank": {
+          "DE": 7681,
+          "DK": 118,
+          "FI": 3482,
+          "GB": 12399,
+          "NO": 256,
+          "SE": 8
+        }
+      },
+      "score_reasons": ["Exact Match", "+5 (Nordic)"]
+    }
+    // ...other last name matches...
+  ]
+}
+```
+
+### Explanation of Response Fields
+
+- **first_name_matches**: A list of potential matches for the provided first name.
+
+  - **name**: The matched name.
+  - **score**: The confidence score for the match.
+  - **base_similarity**: The base similarity score.
+  - **metaphone**: Phonetic representations of the name.
+  - **is_nordic**: Whether the name is Nordic.
+  - **is_query_variant**: Whether the name is a variant of the query.
+  - **in_dataset**: Whether the name exists in the dataset.
+  - **type**: The type of match (e.g., "first_name").
+  - **data**: Additional metadata about the name.
+    - **country**: Country distribution of the name.
+    - **gender**: Gender distribution of the name.
+    - **rank**: Rank of the name in various countries.
+  - **score_reasons**: Reasons for the assigned score.
+
+- **last_name_matches**: A list of potential matches for the provided last name.
+  - Similar structure to **first_name_matches**.
+
+This structure provides detailed information about the matching process and the confidence of each match.
