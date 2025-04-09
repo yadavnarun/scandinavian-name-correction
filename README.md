@@ -94,10 +94,6 @@ The API will be available at http://localhost:8000/
 
 ## API Usage
 
-### Health Check
-
-Response: `OK` (Status 200)
-
 ### Name Correction API
 
 #### Correct a name
