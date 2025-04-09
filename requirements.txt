@@ -1,0 +1,12 @@
+asgiref==3.8.1
+Django==5.2
+djangorestframework==3.16.0
+DoubleMetaphone==1.1
+gunicorn==23.0.0
+names-dataset==3.3.1
+numpy==2.2.4
+packaging==24.2
+pycountry==24.6.1
+RapidFuzz==3.13.0
+sqlparse==0.5.3
+whitenoise==6.6.0
